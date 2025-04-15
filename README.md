@@ -3,6 +3,8 @@
 ![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
+This interactive app lets users test options trading strategies by combining Black-Scholes pricing with Monte Carlo simulations. It visualizes profit/loss scenarios and helps identify theoretical arbitrage opportunities. 
+
 ## Overview
 An interactive web application that simulates options trading strategies using the Black-Scholes model. The tool allows users to:
 - Compare theoretical option prices with market quotes
