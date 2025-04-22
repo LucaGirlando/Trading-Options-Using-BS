@@ -67,7 +67,7 @@ rcParams['font.size'] = 10
 st.title("📊 Trading Options Using the Black-Scholes Model")
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
-Black-Scholes theoretical prices with market maker quotes for **call options**. The strategy involves selling 
+Black-Scholes theoretical prices with market maker quotes for **call/put options**. The strategy involves selling 
 call options when market prices are higher than theoretical values.
 """)
 
