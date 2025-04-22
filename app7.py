@@ -74,7 +74,8 @@ st.title("📊 Trading Options Using the Black-Scholes Model")
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
 Black-Scholes theoretical prices with market maker quotes for **call/put options**. The strategy involves selling 
-call options when market prices are higher than theoretical values. So you'll see that with the default data, the strategy works when running a high number of Monte Carlo simulations with the call option, but not with the put.
+call options when market prices are higher than theoretical values. 
+So you'll see that with the default data, the strategy works when running a high number of Monte Carlo simulations with the call option, but not with the put.
 """)
 
 # Sidebar with user inputs
