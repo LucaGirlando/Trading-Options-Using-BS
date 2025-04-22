@@ -63,19 +63,19 @@ plt.style.use('seaborn-v0_8')
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = 10
 
-# Title and introduction with your LinkedIn
-st.title("📊 Trading Options Using the Black-Scholes Model")
-st.markdown("""
-This interactive tool demonstrates how to identify trading opportunities by comparing 
-Black-Scholes theoretical prices with market maker quotes for **call/put options**. The strategy involves selling 
-call options when market prices are higher than theoretical values.
-""")
-
 st.markdown("""
     <p style="font-size: 12px; text-align: center; color: #7f8c8d;">
         Created by: <a href="https://www.linkedin.com/in/luca-girlando-775463302/" target="_blank">Luca Girlando</a>
     </p>
 """, unsafe_allow_html=True)
+
+# Title and introduction with your LinkedIn
+st.title("📊 Trading Options Using the Black-Scholes Model")
+st.markdown("""
+This interactive tool demonstrates how to identify trading opportunities by comparing 
+Black-Scholes theoretical prices with market maker quotes for **call/put options**. The strategy involves selling 
+call options when market prices are higher than theoretical values. So you'll see that with the default data, the strategy works when running a high number of Monte Carlo simulations with the call option, but not with the put.
+""")
 
 # Sidebar with user inputs
 with st.sidebar:
