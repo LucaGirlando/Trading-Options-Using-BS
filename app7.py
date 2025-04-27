@@ -16,46 +16,114 @@ st.set_page_config(
 
 # Custom CSS styling
 st.markdown("""
-    <style>
-        .main {
-            background-color: #f8f9fa;
-        }
-        .sidebar .sidebar-content {
-            background-color: #e9ecef;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #3498db;
-        }
-        .metric-container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .stButton>button {
-            background-color: #3498db;
-            color: white;
-            border-radius: 5px;
-            padding: 10px 24px;
-            font-weight: bold;
-        }
-        .stButton>button:hover {
-            background-color: #2980b9;
-        }
-        .plot-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-    </style>
+<style>
+:root {
+    --primary-dark: #2c3e50;
+    --primary-medium: #3498db;
+    --primary-light: #f8f9fa;
+    --accent-blue: #3498db;
+    --accent-red: #e74c3c;
+    --accent-green: #2ecc71;
+    --bg-light: #f8f9fa;
+    --bg-dark: #0e1117;
+    --card-light: white;
+    --card-dark: #1a2639;
+    --text-light: #333333;
+    --text-dark: #f0f2f6;
+    --border-light: rgba(0,0,0,0.1);
+    --border-dark: #3e4a61;
+}
+
+* {
+    font-family: 'Lato', 'Segoe UI', Roboto, sans-serif;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.main {
+    background-color: var(--bg-light);
+}
+
+.sidebar .sidebar-content {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium)) !important;
+    color: white !important;
+}
+
+.metric-container {
+    background-color: var(--card-light);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-light);
+}
+
+.stButton>button {
+    background-color: var(--accent-blue);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 24px;
+    font-weight: bold;
+}
+
+.stButton>button:hover {
+    background-color: #2980b9;
+}
+
+.plot-container {
+    background-color: var(--card-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-light);
+}
+
+.warning-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-dark: #f0f2f6;
+        --primary-medium: #3498db;
+        --bg-light: #0e1117;
+        --card-light: #1a2639;
+        --text-light: #f0f2f6;
+        --border-light: #3e4a61;
+    }
+    
+    h1, h2, h3, h4 {
+        color: var(--primary-dark) !important;
+    }
+    
+    .metric-container {
+        background-color: var(--card-dark) !important;
+        border-color: var(--border-dark) !important;
+    }
+    
+    .plot-container {
+        background-color: var(--card-dark) !important;
+        border-color: var(--border-dark) !important;
+    }
+    
+    .warning-box {
+        background-color: #33262a;
+        color: #f8d7da;
+    }
+    
+    .stDataFrame {
+        background-color: var(--card-dark) !important;
+    }
+}
+</style>
 """, unsafe_allow_html=True)
 
 # Set matplotlib style
@@ -65,8 +133,7 @@ rcParams['font.size'] = 10
 
 st.markdown("""
     <p style="font-size: 12px; text-align: center;">
-        Created by: <a href="https://www.linkedin.com/in/luca-girlando-775463302/" target="_blank">Luca Girlando</a><br>
-        <span style="color: red;">Please use the light theme, otherwise with the dark theme some parts might not be displayed correctly</span>
+        Created by: <a href="https://www.linkedin.com/in/luca-girlando-775463302/" target="_blank">Luca Girlando</a>
     </p>
 """, unsafe_allow_html=True)
 
@@ -186,39 +253,37 @@ with st.container():
     ax.plot(path.simulated_path, label='Stock Price Path', color='#3498db', linewidth=2)
 
     if strategy_type == "Sell (Short)":
-        # Logica per VENDITA opzione
         if option_type == "Call":
             terminal_payoff = -max(path.simulated_path[-1] - K, 0)
-            if terminal_payoff == 0:  # Non esercitata
+            if terminal_payoff == 0:
                 ax.vlines(252, path.simulated_path[-1], K, color='#2ecc71', 
                         label=f"Profit (Keep ${market_price:.2f} premium)", linewidth=3)
-            else:  # Esercitata
+            else:
                 ax.vlines(252, K, path.simulated_path[-1], color='#e74c3c', 
                         label=f"Loss (Pay ${-terminal_payoff:.2f})", linewidth=3)
-        else:  # Put venduta
+        else:
             terminal_payoff = -max(K - path.simulated_path[-1], 0)
-            if terminal_payoff == 0:  # Non esercitata
+            if terminal_payoff == 0:
                 ax.vlines(252, K, path.simulated_path[-1], color='#2ecc71', 
                         label=f"Profit (Keep ${market_price:.2f} premium)", linewidth=3)
-            else:  # Esercitata
+            else:
                 ax.vlines(252, path.simulated_path[-1], K, color='#e74c3c', 
                         label=f"Loss (Pay ${-terminal_payoff:.2f})", linewidth=3)
     else:
-        # Logica per ACQUISTO opzione
         if option_type == "Call":
             terminal_payoff = max(path.simulated_path[-1] - K, 0)
-            if terminal_payoff == 0:  # Non esercitata
+            if terminal_payoff == 0:
                 ax.vlines(252, path.simulated_path[-1], K, color='#e74c3c', 
                         label=f"Loss (Lose ${market_price:.2f} premium)", linewidth=3)
-            else:  # Esercitata
+            else:
                 ax.vlines(252, K, path.simulated_path[-1], color='#2ecc71', 
                         label=f"Profit (Gain ${terminal_payoff:.2f})", linewidth=3)
-        else:  # Put comprata
+        else:
             terminal_payoff = max(K - path.simulated_path[-1], 0)
-            if terminal_payoff == 0:  # Non esercitata
+            if terminal_payoff == 0:
                 ax.vlines(252, K, path.simulated_path[-1], color='#e74c3c', 
                         label=f"Loss (Lose ${market_price:.2f} premium)", linewidth=3)
-            else:  # Esercitata
+            else:
                 ax.vlines(252, path.simulated_path[-1], K, color='#2ecc71', 
                         label=f"Profit (Gain ${terminal_payoff:.2f})", linewidth=3)
 
@@ -231,9 +296,9 @@ with st.container():
 
 # Calculate P/L for single simulation
 if strategy_type == "Sell (Short)":
-    pl_single = market_price + terminal_payoff  # Per vendita: premio + payoff negativo
+    pl_single = market_price + terminal_payoff
 else:
-    pl_single = terminal_payoff - market_price  # Per acquisto: payoff positivo - premio
+    pl_single = terminal_payoff - market_price
 
 st.markdown('<div class="metric-container">', unsafe_allow_html=True)
 st.metric("Single Simulation P/L", f"{pl_single:.2f}", 
@@ -271,7 +336,7 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         
         if option_type == "Call":
             terminal_value = max(path.simulated_path[-1] - K, 0)
-        else:  # Put option
+        else:
             terminal_value = max(K - path.simulated_path[-1], 0)
             
         pls.append(terminal_value - premium)
@@ -300,7 +365,6 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         st.pyplot(fig2)
         st.markdown('</div>', unsafe_allow_html=True)
     
-     # Explanation about simulation count
     with st.expander("ℹ️ Why does the number of simulations matter?", expanded=True):
         st.markdown("""
         The number of simulations significantly impacts the reliability of our results because:
@@ -351,7 +415,7 @@ While the Black-Scholes model provides a theoretical framework, real-world tradi
 """)
 
 st.markdown("""
-<div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-top: 20px;">
+<div class="warning-box">
     <strong>Note:</strong> This is for educational purposes only. Options trading involves substantial risk.
 </div>
 """, unsafe_allow_html=True)
