@@ -16,41 +16,36 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    /* Light Theme - Professionale e leggibile */
-    --primary-dark: #000000;         /* Grigio antracite per testo */
-    --primary-light: #f5f6fa;       /* Grigio chiarissimo per sfondi */
+    /* Light Theme - Nero su Bianco */
+    --primary-text: #000000;         /* Nero puro per testo */
+    --bg-color: #ffffff;            /* Bianco puro per sfondo */
     --card-bg: #ffffff;             /* Bianco puro per cards */
-    --card-border: #dfe6e9;         /* Grigio chiaro per bordi */
-    --accent-blue: #0984e3;         /* Blu vivo ma professionale */
-    --accent-red: #d63031;          /* Rosso per avvisi */
-    --accent-green: #00b894;        /* Verde professionale */
-    --sidebar-bg: #2d3436;          /* Grigio scuro per sidebar */
+    --card-border: #e0e0e0;         /* Grigio chiaro solo per bordi */
+    --accent-blue: #0056b3;         /* Blu scuro professionale */
+    --accent-red: #d32f2f;          /* Rosso per avvisi */
+    --accent-green: #388e3c;        /* Verde professionale */
+    --sidebar-bg: #1a1a1a;          /* Nero per sidebar */
     --sidebar-text: #ffffff;        /* Bianco per testo sidebar */
-    --metric-bg: #f1f2f6;           /* Grigio molto chiaro per metriche */
+    --metric-bg: #f5f5f5;           /* Grigio chiarissimo per metriche */
     
-    /* Dark Theme - Già valido */
-    --dark-primary: #f5f6fa;
-    --dark-bg: #1e272e;
-    --dark-card: #2d3436;
-    --dark-border: #3c484f;
+    /* Dark Theme - Bianco su Nero */
+    --dark-primary: #ffffff;
+    --dark-bg: #121212;
+    --dark-card: #1e1e1e;
+    --dark-border: #333333;
 }
 
 /* Base Styles */
 * {
-    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: var(--primary-light);
+    background-color: var(--bg-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    color: var(--primary-dark) !important;
-    font-weight: 600;
-}
-
-.stMarkdown, .stText {
-    color: var(--primary-dark) !important;
+h1, h2, h3, h4, h5, h6, p, div {
+    color: var(--primary-text) !important;
 }
 
 /* Sidebar */
@@ -59,85 +54,42 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--sidebar-text) !important;
 }
 
-.sidebar .stRadio label,
-.sidebar .stNumberInput label,
-.sidebar .stSlider label {
-    color: var(--sidebar-text) !important;
-}
-
 /* Cards */
 .metric-container {
     background-color: var(--metric-bg) !important;
+    border: 1px solid var(--card-border);
     border-radius: 8px;
     padding: 16px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .plot-container {
     background-color: var(--card-bg) !important;
+    border: 1px solid var(--card-border);
     border-radius: 8px;
     padding: 20px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* Buttons */
 .stButton>button {
     background-color: var(--accent-blue);
     color: white !important;
-    border-radius: 6px;
-    padding: 8px 18px;
-    font-weight: 500;
     border: none;
-    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 500;
 }
 
-.stButton>button:hover {
-    background-color: #0768b9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Warning Box */
-.warning-box {
-    background-color: #ffeaa7;
-    color: #d63031;
-    padding: 16px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent-red);
-    margin: 16px 0;
-}
-
-/* Dark Mode Overrides */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-dark: var(--dark-primary);
-        --primary-light: var(--dark-bg);
+        --primary-text: var(--dark-primary);
+        --bg-color: var(--dark-bg);
         --card-bg: var(--dark-card);
         --card-border: var(--dark-border);
-        --metric-bg: #34495e;
+        --metric-bg: #2d2d2d;
     }
-    
-    .warning-box {
-        background-color: #3d3d3d;
-        color: #ff7675;
-        border-left-color: #d63031;
-    }
-}
-
-/* Specific Fixes */
-[data-testid="stHeader"] {
-    color: var(--primary-dark) !important;
-}
-
-.st-emotion-cache-10trblm {
-    color: var(--primary-dark) !important;
-}
-
-.st-emotion-cache-1kyxreq {
-    color: var(--primary-dark) !important;
 }
 </style>
 """, unsafe_allow_html=True)
