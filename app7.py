@@ -16,124 +16,130 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    --primary-dark: #000000;  
-    --primary-medium: #3498db;
-    --primary-light: #f8f9fa;
-    --accent-blue: #3498db;
-    --accent-red: #e74c3c;
-    --accent-green: #2ecc71;
-    --bg-light: #f8f9fa;
-    --bg-dark: #0e1117;
-    --card-light: white;
-    --card-dark: #1a2639;
-    --text-light: #000000;   
-    --text-dark: #f0f2f6;
-    --border-light: rgba(0,0,0,0.1);
-    --border-dark: #3e4a61;
-    --sidebar-text: #ffffff;
-    --sidebar-bg: #2c3e50;
-    --section-header: #000000; 
+    /* Light theme colors */
+    --primary-text: #000000;         /* Nero per testo principale */
+    --secondary-text: #333333;      /* Grigio scuro per testo secondario */
+    --bg-color: #ffffff;           /* Bianco puro per sfondo */
+    --card-bg: #f8f9fa;            /* Grigio chiarissimo per cards */
+    --border-color: #e0e0e0;       /* Grigio chiaro per bordi */
+    --accent-blue: #1a73e8;        /* Blu vivo ma professionale */
+    --accent-red: #d32f2f;         /* Rosso acceso per evidenziare */
+    --accent-green: #388e3c;       /* Verde professionale */
+    --sidebar-bg: #202124;         /* Grigio molto scuro per sidebar */
+    --sidebar-text: #ffffff;       /* Bianco per testo sidebar */
+    
+    /* Dark theme overrides */
+    --dark-primary-text: #ffffff;  /* Bianco per dark mode */
+    --dark-secondary-text: #e0e0e0;/* Grigio chiaro */
+    --dark-bg-color: #121212;      /* Nero quasi puro */
+    --dark-card-bg: #1e1e1e;      /* Grigio molto scuro */
+    --dark-border-color: #424242;  /* Grigio scuro */
 }
 
+/* Base styles */
 * {
-    font-family: 'Lato', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
 }
 
-h1, h2, h3, h4 {
-    color: var(--section-header) !important;
-    font-weight: 700;
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-text) !important;
+    font-weight: 600;
+}
+
+.stMarkdown, .stText, .stAlert {
+    color: var(--primary-text) !important;
 }
 
 .main {
-    background-color: var(--bg-light);
-    color: var(--text-light);
+    background-color: var(--bg-color);
 }
 
+/* Sidebar styling */
 .sidebar .sidebar-content {
-    background: linear-gradient(135deg, var(--sidebar-bg), #1a2639) !important;
+    background-color: var(--sidebar-bg) !important;
     color: var(--sidebar-text) !important;
 }
 
+.sidebar .stRadio label, 
+.sidebar .stNumberInput label,
+.sidebar .stSlider label {
+    color: var(--sidebar-text) !important;
+}
+
+/* Cards and containers */
 .metric-container {
-    background-color: var(--card-light);
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    border: 1px solid var(--border-light);
-}
-
-.stButton>button {
-    background-color: var(--accent-blue);
-    color: white;
-    border-radius: 5px;
-    padding: 10px 24px;
-    font-weight: bold;
-}
-
-.stButton>button:hover {
-    background-color: #2980b9;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
 }
 
 .plot-container {
-    background-color: var(--card-light);
-    border-radius: 10px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    border: 1px solid var(--border-light);
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
 }
 
+/* Buttons */
+.stButton>button {
+    background-color: var(--accent-blue);
+    color: white;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 500;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #0d62c9;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Warning box */
 .warning-box {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border-radius: 5px;
-    margin-top: 20px;
+    background-color: #fce8e6;
+    color: #d32f2f;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-red);
+    margin: 16px 0;
 }
 
-[data-testid="stHeader"] {
-    color: var(--section-header) !important;
-}
-
-.st-emotion-cache-1kyxreq, 
-.st-emotion-cache-1p1nwyz, 
-.st-emotion-cache-1v0mbdj {
-    color: var(--section-header) !important;
-}
-
+/* Dark mode overrides */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-dark: #f0f2f6;
-        --primary-medium: #3498db;
-        --bg-light: #0e1117;
-        --card-light: #1a2639;
-        --text-light: #f0f2f6;
-        --border-light: #3e4a61;
-    }
-    
-    h1, h2, h3, h4 {
-        color: var(--primary-dark) !important;
-    }
-    
-    .metric-container {
-        background-color: var(--card-dark) !important;
-        border-color: var(--border-dark) !important;
-    }
-    
-    .plot-container {
-        background-color: var(--card-dark) !important;
-        border-color: var(--border-dark) !important;
+        --primary-text: var(--dark-primary-text);
+        --secondary-text: var(--dark-secondary-text);
+        --bg-color: var(--dark-bg-color);
+        --card-bg: var(--dark-card-bg);
+        --border-color: var(--dark-border-color);
     }
     
     .warning-box {
-        background-color: #33262a;
-        color: #f8d7da;
+        background-color: #3c1f1e;
+        color: #f4b8b4;
     }
     
-    .stDataFrame {
-        background-color: var(--card-dark) !important;
+    .metric-container, .plot-container {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
+}
+
+/* Specific component fixes */
+[data-testid="stHeader"] {
+    color: var(--primary-text) !important;
+}
+
+.st-emotion-cache-10trblm {
+    color: var(--primary-text) !important;
+}
+
+.st-emotion-cache-1kyxreq {
+    color: var(--primary-text) !important;
 }
 </style>
 """, unsafe_allow_html=True)
