@@ -14,6 +14,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown("<h1 style='color: black;'>Trading Options Using the Black-Scholes Model</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='color: black;'>Option Parameters</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='color: black;'>Single Call Option Buy Simulation</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='color: black;'>Monte Carlo Simulation Results</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='color: black;'>Model Limitations</h2>", unsafe_allow_html=True)
+st.sidebar.markdown("<h2 style='color: black;'>Option Parameters</h2>", unsafe_allow_html=True)
+
 # Custom CSS styling
 st.markdown("""
 <style>
