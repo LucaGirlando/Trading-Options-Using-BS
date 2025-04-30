@@ -1,4 +1,4 @@
-# App Trading Options using BS model
+#App Trading Options using BS model
 import streamlit as st
 import numpy as np
 from scipy.stats import norm
@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import qfin as qf
 from matplotlib import rcParams
 
+# Set page config with your details
 st.set_page_config(
     page_title="Trading Options Using the Black-Scholes Model",
     page_icon="📈",
@@ -13,74 +14,119 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Custom CSS styling
 st.markdown("""
 <style>
 :root {
-    /* Light Theme - Nero su Bianco */
-    --text-color: #000000;          /* NERO PURO */
-    --bg-color: #ffffff;            /* Bianco puro */
-    --card-bg: #ffffff;             /* Bianco puro */
-    --border-color: #e0e0e0;       /* Grigio chiaro solo bordi */
-    --accent-blue: #1565C0;        /* Blu scuro */
-    --metric-bg: #f5f5f5;          /* Grigio chiarissimo */
-    
-    /* Dark Theme - Bianco su Nero */
-    --dark-text: #ffffff;
-    --dark-bg: #121212;
-    --dark-card: #1e1e1e;
-    --dark-border: #333333;
+    --primary-dark: #2c3e50;
+    --primary-medium: #3498db;
+    --primary-light: #f8f9fa;
+    --accent-blue: #3498db;
+    --accent-red: #e74c3c;
+    --accent-green: #2ecc71;
+    --bg-light: #f8f9fa;
+    --bg-dark: #0e1117;
+    --card-light: white;
+    --card-dark: #1a2639;
+    --text-light: #333333;
+    --text-dark: #f0f2f6;
+    --border-light: rgba(0,0,0,0.1);
+    --border-dark: #3e4a61;
 }
 
-/* RESET COMPLETO COLORI TESTI */
-body, h1, h2, h3, h4, h5, h6, p, div, span, .stMarkdown, .stText, .stAlert, .st-expander {
-    color: var(--text-color) !important;
+* {
+    font-family: 'Lato', 'Segoe UI', Roboto, sans-serif;
 }
 
-/* SFONDO PRINCIPALE */
+h1, h2, h3, h4 {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
 .main {
-    background-color: var(--bg-color) !important;
+    background-color: var(--bg-light);
 }
 
-/* SIDEBAR */
 .sidebar .sidebar-content {
-    background: #1a1a1a !important;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium)) !important;
     color: white !important;
 }
 
-/* CARD E CONTAINER */
-.metric-container, .plot-container {
-    background-color: var(--card-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    color: var(--text-color) !important;
+.metric-container {
+    background-color: var(--card-light);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-light);
 }
 
-/* BOTTONI */
 .stButton>button {
-    background-color: var(--accent-blue) !important;
-    color: white !important;
+    background-color: var(--accent-blue);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 24px;
+    font-weight: bold;
 }
 
-/* DARK MODE OVERRIDE */
+.stButton>button:hover {
+    background-color: #2980b9;
+}
+
+.plot-container {
+    background-color: var(--card-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-light);
+}
+
+.warning-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
-        --text-color: var(--dark-text);
-        --bg-color: var(--dark-bg);
-        --card-bg: var(--dark-card);
-        --border-color: var(--dark-border);
+        --primary-dark: #f0f2f6;
+        --primary-medium: #3498db;
+        --bg-light: #0e1117;
+        --card-light: #1a2639;
+        --text-light: #f0f2f6;
+        --border-light: #3e4a61;
     }
     
-    .metric-container, .plot-container {
-        background-color: var(--dark-card) !important;
+    h1, h2, h3, h4 {
+        color: var(--primary-dark) !important;
     }
-}
-
-/* FORZATURA TESTI NERI */
-[class*="st"] {
-    color: var(--text-color) !important;
+    
+    .metric-container {
+        background-color: var(--card-dark) !important;
+        border-color: var(--border-dark) !important;
+    }
+    
+    .plot-container {
+        background-color: var(--card-dark) !important;
+        border-color: var(--border-dark) !important;
+    }
+    
+    .warning-box {
+        background-color: #33262a;
+        color: #f8d7da;
+    }
+    
+    .stDataFrame {
+        background-color: var(--card-dark) !important;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
 
+# Set matplotlib style
 plt.style.use('seaborn-v0_8')
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = 10
@@ -91,6 +137,7 @@ st.markdown("""
     </p>
 """, unsafe_allow_html=True)
 
+# Title and introduction with your LinkedIn
 st.title("📊 Trading Options Using the Black-Scholes Model")
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
@@ -99,6 +146,7 @@ call options when market prices are higher than theoretical values.
 So you'll see that with the default data, the strategy works when running a high number of Monte Carlo simulations with the call option, but not with the put.
 """)
 
+# Sidebar with user inputs
 with st.sidebar:
     st.header("⚙️ Option Parameters")
     option_type = st.radio("Option Type", ["Call", "Put"], index=0)
@@ -111,6 +159,7 @@ with st.sidebar:
     market_price = st.number_input("Market Maker Ask Price", value=14.10, step=0.1, help="Current market price for the option")
     n_simulations = st.slider("Number of Simulations", 100, 100000, 1000, step=100, help="More simulations increase result accuracy but take longer")
 
+# Black-Scholes formula for both call and put
 def black_scholes(S, K, sigma, r, t, option_type="call"):
     d1 = (np.log(S/K) + (r + ((sigma**2)/2))*t) / (sigma * np.sqrt(t))
     d2 = d1 - (sigma * np.sqrt(t))
@@ -124,8 +173,10 @@ def black_scholes(S, K, sigma, r, t, option_type="call"):
     else:
         raise ValueError("Option type must be either 'call' or 'put'")
 
+# Calculate theoretical price
 theoretical_price = black_scholes(S, K, sigma, r, t, option_type.lower())
 
+# Display formulas in an expandable section
 with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     if option_type == "Call":
         st.markdown(r"""
@@ -169,6 +220,7 @@ with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     - $N(\cdot)$ = Cumulative distribution function of the standard normal distribution
     """)
 
+# Display calculated values in columns
 col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
@@ -184,6 +236,7 @@ with col3:
     st.metric("Theoretical Edge", f"{edge:.2f}", delta_color="inverse")
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Single simulation visualization
 st.header(f"📉 Single {option_type} Option {strategy_type.split(' ')[0]} Simulation")
 st.markdown(f"""
 Below shows one possible path for the underlying stock price and the resulting P/L 
@@ -241,6 +294,7 @@ with st.container():
     st.pyplot(fig)
     st.markdown('</div>', unsafe_allow_html=True)
 
+# Calculate P/L for single simulation
 if strategy_type == "Sell (Short)":
     pl_single = market_price + terminal_payoff
 else:
@@ -251,6 +305,7 @@ st.metric("Single Simulation P/L", f"{pl_single:.2f}",
           help=f"Profit/Loss from {strategy_type.lower()} one {option_type.lower()} option at market price")
 st.markdown('</div>', unsafe_allow_html=True)
 
+# Monte Carlo simulation
 st.header("🎲 Monte Carlo Simulation Results")
 st.markdown(f"""
 Running {n_simulations:,} simulations to estimate the expected P/L from this {option_type.lower()} option strategy.
@@ -297,6 +352,7 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
              help=f"Average profit/loss per {option_type.lower()} option over all simulations")
     st.markdown('</div>', unsafe_allow_html=True)
     
+    # Equity curve
     with st.container():
         st.markdown('<div class="plot-container">', unsafe_allow_html=True)
         fig2, ax2 = plt.subplots(figsize=(10, 6))
@@ -329,6 +385,7 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         options pricing applications.
         """)
     
+    # Histogram of results
     with st.container():
         st.markdown('<div class="plot-container">', unsafe_allow_html=True)
         fig3, ax3 = plt.subplots(figsize=(10, 6))
@@ -343,6 +400,7 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         st.pyplot(fig3)
         st.markdown('</div>', unsafe_allow_html=True)
 
+# Model limitations
 st.header("⚠️ Model Limitations")
 st.markdown("""
 While the Black-Scholes model provides a theoretical framework, real-world trading has challenges:
