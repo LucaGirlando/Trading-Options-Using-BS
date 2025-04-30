@@ -28,7 +28,7 @@ st.markdown("""
     --bg-dark: #0e1117;
     --card-light: white;
     --card-dark: #1a2639;
-    --text-light: #333333;
+    --text-light: #000000;
     --text-dark: #f0f2f6;
     --border-light: rgba(0,0,0,0.1);
     --border-dark: #3e4a61;
