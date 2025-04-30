@@ -16,7 +16,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    --primary-dark: #2c3e50;
+    --primary-dark: #000000;  
     --primary-medium: #3498db;
     --primary-light: #f8f9fa;
     --accent-blue: #3498db;
@@ -26,13 +26,13 @@ st.markdown("""
     --bg-dark: #0e1117;
     --card-light: white;
     --card-dark: #1a2639;
-    --text-light: #333333;
+    --text-light: #000000;   
     --text-dark: #f0f2f6;
     --border-light: rgba(0,0,0,0.1);
     --border-dark: #3e4a61;
     --sidebar-text: #ffffff;
     --sidebar-bg: #2c3e50;
-    --section-header: #2c3e50;
+    --section-header: #000000; 
 }
 
 * {
