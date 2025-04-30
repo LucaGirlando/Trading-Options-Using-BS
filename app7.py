@@ -17,79 +17,66 @@ st.markdown("""
 <style>
 :root {
     /* Light Theme - Nero su Bianco */
-    --primary-text: #000000;         /* Nero puro per testo */
-    --bg-color: #ffffff;            /* Bianco puro per sfondo */
-    --card-bg: #ffffff;             /* Bianco puro per cards */
-    --card-border: #e0e0e0;         /* Grigio chiaro solo per bordi */
-    --accent-blue: #0056b3;         /* Blu scuro professionale */
-    --accent-red: #d32f2f;          /* Rosso per avvisi */
-    --accent-green: #388e3c;        /* Verde professionale */
-    --sidebar-bg: #1a1a1a;          /* Nero per sidebar */
-    --sidebar-text: #ffffff;        /* Bianco per testo sidebar */
-    --metric-bg: #f5f5f5;           /* Grigio chiarissimo per metriche */
+    --text-color: #000000;          /* NERO PURO */
+    --bg-color: #ffffff;            /* Bianco puro */
+    --card-bg: #ffffff;             /* Bianco puro */
+    --border-color: #e0e0e0;       /* Grigio chiaro solo bordi */
+    --accent-blue: #1565C0;        /* Blu scuro */
+    --metric-bg: #f5f5f5;          /* Grigio chiarissimo */
     
     /* Dark Theme - Bianco su Nero */
-    --dark-primary: #ffffff;
+    --dark-text: #ffffff;
     --dark-bg: #121212;
     --dark-card: #1e1e1e;
     --dark-border: #333333;
 }
 
-/* Base Styles */
-* {
-    font-family: 'Roboto', sans-serif;
+/* RESET COMPLETO COLORI TESTI */
+body, h1, h2, h3, h4, h5, h6, p, div, span, .stMarkdown, .stText, .stAlert, .st-expander {
+    color: var(--text-color) !important;
 }
 
-body {
-    background-color: var(--bg-color);
+/* SFONDO PRINCIPALE */
+.main {
+    background-color: var(--bg-color) !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, div {
-    color: var(--primary-text) !important;
-}
-
-/* Sidebar */
+/* SIDEBAR */
 .sidebar .sidebar-content {
-    background: var(--sidebar-bg) !important;
-    color: var(--sidebar-text) !important;
-}
-
-/* Cards */
-.metric-container {
-    background-color: var(--metric-bg) !important;
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.plot-container {
-    background-color: var(--card-bg) !important;
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-/* Buttons */
-.stButton>button {
-    background-color: var(--accent-blue);
+    background: #1a1a1a !important;
     color: white !important;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-weight: 500;
 }
 
-/* Dark Mode */
+/* CARD E CONTAINER */
+.metric-container, .plot-container {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* BOTTONI */
+.stButton>button {
+    background-color: var(--accent-blue) !important;
+    color: white !important;
+}
+
+/* DARK MODE OVERRIDE */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-text: var(--dark-primary);
+        --text-color: var(--dark-text);
         --bg-color: var(--dark-bg);
         --card-bg: var(--dark-card);
-        --card-border: var(--dark-border);
-        --metric-bg: #2d2d2d;
+        --border-color: var(--dark-border);
     }
+    
+    .metric-container, .plot-container {
+        background-color: var(--dark-card) !important;
+    }
+}
+
+/* FORZATURA TESTI NERI */
+[class*="st"] {
+    color: var(--text-color) !important;
 }
 </style>
 """, unsafe_allow_html=True)
