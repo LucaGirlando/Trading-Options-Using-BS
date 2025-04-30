@@ -1,4 +1,4 @@
-#App Trading Options using BS model
+# App Trading Options using BS model
 import streamlit as st
 import numpy as np
 from scipy.stats import norm
@@ -16,130 +16,128 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    /* Light theme colors */
-    --primary-text: #000000;         /* Nero per testo principale */
-    --secondary-text: #333333;      /* Grigio scuro per testo secondario */
-    --bg-color: #ffffff;           /* Bianco puro per sfondo */
-    --card-bg: #f8f9fa;            /* Grigio chiarissimo per cards */
-    --border-color: #e0e0e0;       /* Grigio chiaro per bordi */
-    --accent-blue: #1a73e8;        /* Blu vivo ma professionale */
-    --accent-red: #d32f2f;         /* Rosso acceso per evidenziare */
-    --accent-green: #388e3c;       /* Verde professionale */
-    --sidebar-bg: #202124;         /* Grigio molto scuro per sidebar */
-    --sidebar-text: #ffffff;       /* Bianco per testo sidebar */
+    /* Light Theme - Professionale e leggibile */
+    --primary-dark: #2d3436;         /* Grigio antracite per testo */
+    --primary-light: #f5f6fa;       /* Grigio chiarissimo per sfondi */
+    --card-bg: #ffffff;             /* Bianco puro per cards */
+    --card-border: #dfe6e9;         /* Grigio chiaro per bordi */
+    --accent-blue: #0984e3;         /* Blu vivo ma professionale */
+    --accent-red: #d63031;          /* Rosso per avvisi */
+    --accent-green: #00b894;        /* Verde professionale */
+    --sidebar-bg: #2d3436;          /* Grigio scuro per sidebar */
+    --sidebar-text: #ffffff;        /* Bianco per testo sidebar */
+    --metric-bg: #f1f2f6;           /* Grigio molto chiaro per metriche */
     
-    /* Dark theme overrides */
-    --dark-primary-text: #ffffff;  /* Bianco per dark mode */
-    --dark-secondary-text: #e0e0e0;/* Grigio chiaro */
-    --dark-bg-color: #121212;      /* Nero quasi puro */
-    --dark-card-bg: #1e1e1e;      /* Grigio molto scuro */
-    --dark-border-color: #424242;  /* Grigio scuro */
+    /* Dark Theme - Già valido */
+    --dark-primary: #f5f6fa;
+    --dark-bg: #1e272e;
+    --dark-card: #2d3436;
+    --dark-border: #3c484f;
 }
 
-/* Base styles */
+/* Base Styles */
 * {
     font-family: 'Roboto', 'Segoe UI', sans-serif;
 }
 
+body {
+    background-color: var(--primary-light);
+}
+
 h1, h2, h3, h4, h5, h6 {
-    color: var(--primary-text) !important;
+    color: var(--primary-dark) !important;
     font-weight: 600;
 }
 
-.stMarkdown, .stText, .stAlert {
-    color: var(--primary-text) !important;
+.stMarkdown, .stText {
+    color: var(--primary-dark) !important;
 }
 
-.main {
-    background-color: var(--bg-color);
-}
-
-/* Sidebar styling */
+/* Sidebar */
 .sidebar .sidebar-content {
-    background-color: var(--sidebar-bg) !important;
+    background: var(--sidebar-bg) !important;
     color: var(--sidebar-text) !important;
 }
 
-.sidebar .stRadio label, 
+.sidebar .stRadio label,
 .sidebar .stNumberInput label,
 .sidebar .stSlider label {
     color: var(--sidebar-text) !important;
 }
 
-/* Cards and containers */
+/* Cards */
 .metric-container {
-    background-color: var(--card-bg);
+    background-color: var(--metric-bg) !important;
     border-radius: 8px;
     padding: 16px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .plot-container {
-    background-color: var(--card-bg);
+    background-color: var(--card-bg) !important;
     border-radius: 8px;
     padding: 20px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     margin-bottom: 24px;
-    border: 1px solid var(--border-color);
 }
 
 /* Buttons */
 .stButton>button {
     background-color: var(--accent-blue);
-    color: white;
-    border-radius: 4px;
-    padding: 8px 16px;
+    color: white !important;
+    border-radius: 6px;
+    padding: 8px 18px;
     font-weight: 500;
     border: none;
+    transition: all 0.3s ease;
 }
 
 .stButton>button:hover {
-    background-color: #0d62c9;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    background-color: #0768b9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Warning box */
+/* Warning Box */
 .warning-box {
-    background-color: #fce8e6;
-    color: #d32f2f;
+    background-color: #ffeaa7;
+    color: #d63031;
     padding: 16px;
     border-radius: 8px;
     border-left: 4px solid var(--accent-red);
     margin: 16px 0;
 }
 
-/* Dark mode overrides */
+/* Dark Mode Overrides */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-text: var(--dark-primary-text);
-        --secondary-text: var(--dark-secondary-text);
-        --bg-color: var(--dark-bg-color);
-        --card-bg: var(--dark-card-bg);
-        --border-color: var(--dark-border-color);
+        --primary-dark: var(--dark-primary);
+        --primary-light: var(--dark-bg);
+        --card-bg: var(--dark-card);
+        --card-border: var(--dark-border);
+        --metric-bg: #34495e;
     }
     
     .warning-box {
-        background-color: #3c1f1e;
-        color: #f4b8b4;
-    }
-    
-    .metric-container, .plot-container {
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        background-color: #3d3d3d;
+        color: #ff7675;
+        border-left-color: #d63031;
     }
 }
 
-/* Specific component fixes */
+/* Specific Fixes */
 [data-testid="stHeader"] {
-    color: var(--primary-text) !important;
+    color: var(--primary-dark) !important;
 }
 
 .st-emotion-cache-10trblm {
-    color: var(--primary-text) !important;
+    color: var(--primary-dark) !important;
 }
 
 .st-emotion-cache-1kyxreq {
-    color: var(--primary-text) !important;
+    color: var(--primary-dark) !important;
 }
 </style>
 """, unsafe_allow_html=True)
