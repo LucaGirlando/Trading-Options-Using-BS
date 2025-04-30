@@ -17,7 +17,7 @@ st.markdown("""
 <style>
 :root {
     /* Light Theme - Professionale e leggibile */
-    --primary-dark: #2d3436;         /* Grigio antracite per testo */
+    --primary-dark: #000000;         /* Grigio antracite per testo */
     --primary-light: #f5f6fa;       /* Grigio chiarissimo per sfondi */
     --card-bg: #ffffff;             /* Bianco puro per cards */
     --card-border: #dfe6e9;         /* Grigio chiaro per bordi */
