@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import qfin as qf
 from matplotlib import rcParams
 
-# Set page config with your details
 st.set_page_config(
     page_title="Trading Options Using the Black-Scholes Model",
     page_icon="📈",
@@ -14,7 +13,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS styling
 st.markdown("""
 <style>
 :root {
@@ -32,6 +30,9 @@ st.markdown("""
     --text-dark: #f0f2f6;
     --border-light: rgba(0,0,0,0.1);
     --border-dark: #3e4a61;
+    --sidebar-text: #ffffff;
+    --sidebar-bg: #2c3e50;
+    --section-header: #2c3e50;
 }
 
 * {
@@ -39,17 +40,18 @@ st.markdown("""
 }
 
 h1, h2, h3, h4 {
-    color: var(--primary-dark);
+    color: var(--section-header) !important;
     font-weight: 700;
 }
 
 .main {
     background-color: var(--bg-light);
+    color: var(--text-light);
 }
 
 .sidebar .sidebar-content {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium)) !important;
-    color: white !important;
+    background: linear-gradient(135deg, var(--sidebar-bg), #1a2639) !important;
+    color: var(--sidebar-text) !important;
 }
 
 .metric-container {
@@ -90,6 +92,16 @@ h1, h2, h3, h4 {
     margin-top: 20px;
 }
 
+[data-testid="stHeader"] {
+    color: var(--section-header) !important;
+}
+
+.st-emotion-cache-1kyxreq, 
+.st-emotion-cache-1p1nwyz, 
+.st-emotion-cache-1v0mbdj {
+    color: var(--section-header) !important;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --primary-dark: #f0f2f6;
@@ -126,7 +138,6 @@ h1, h2, h3, h4 {
 </style>
 """, unsafe_allow_html=True)
 
-# Set matplotlib style
 plt.style.use('seaborn-v0_8')
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = 10
@@ -137,7 +148,6 @@ st.markdown("""
     </p>
 """, unsafe_allow_html=True)
 
-# Title and introduction with your LinkedIn
 st.title("📊 Trading Options Using the Black-Scholes Model")
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
@@ -146,7 +156,6 @@ call options when market prices are higher than theoretical values.
 So you'll see that with the default data, the strategy works when running a high number of Monte Carlo simulations with the call option, but not with the put.
 """)
 
-# Sidebar with user inputs
 with st.sidebar:
     st.header("⚙️ Option Parameters")
     option_type = st.radio("Option Type", ["Call", "Put"], index=0)
@@ -159,7 +168,6 @@ with st.sidebar:
     market_price = st.number_input("Market Maker Ask Price", value=14.10, step=0.1, help="Current market price for the option")
     n_simulations = st.slider("Number of Simulations", 100, 100000, 1000, step=100, help="More simulations increase result accuracy but take longer")
 
-# Black-Scholes formula for both call and put
 def black_scholes(S, K, sigma, r, t, option_type="call"):
     d1 = (np.log(S/K) + (r + ((sigma**2)/2))*t) / (sigma * np.sqrt(t))
     d2 = d1 - (sigma * np.sqrt(t))
@@ -173,10 +181,8 @@ def black_scholes(S, K, sigma, r, t, option_type="call"):
     else:
         raise ValueError("Option type must be either 'call' or 'put'")
 
-# Calculate theoretical price
 theoretical_price = black_scholes(S, K, sigma, r, t, option_type.lower())
 
-# Display formulas in an expandable section
 with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     if option_type == "Call":
         st.markdown(r"""
@@ -220,7 +226,6 @@ with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     - $N(\cdot)$ = Cumulative distribution function of the standard normal distribution
     """)
 
-# Display calculated values in columns
 col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
@@ -236,7 +241,6 @@ with col3:
     st.metric("Theoretical Edge", f"{edge:.2f}", delta_color="inverse")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Single simulation visualization
 st.header(f"📉 Single {option_type} Option {strategy_type.split(' ')[0]} Simulation")
 st.markdown(f"""
 Below shows one possible path for the underlying stock price and the resulting P/L 
@@ -294,7 +298,6 @@ with st.container():
     st.pyplot(fig)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Calculate P/L for single simulation
 if strategy_type == "Sell (Short)":
     pl_single = market_price + terminal_payoff
 else:
@@ -305,7 +308,6 @@ st.metric("Single Simulation P/L", f"{pl_single:.2f}",
           help=f"Profit/Loss from {strategy_type.lower()} one {option_type.lower()} option at market price")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Monte Carlo simulation
 st.header("🎲 Monte Carlo Simulation Results")
 st.markdown(f"""
 Running {n_simulations:,} simulations to estimate the expected P/L from this {option_type.lower()} option strategy.
@@ -352,7 +354,6 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
              help=f"Average profit/loss per {option_type.lower()} option over all simulations")
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Equity curve
     with st.container():
         st.markdown('<div class="plot-container">', unsafe_allow_html=True)
         fig2, ax2 = plt.subplots(figsize=(10, 6))
@@ -385,7 +386,6 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         options pricing applications.
         """)
     
-    # Histogram of results
     with st.container():
         st.markdown('<div class="plot-container">', unsafe_allow_html=True)
         fig3, ax3 = plt.subplots(figsize=(10, 6))
@@ -400,7 +400,6 @@ if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
         st.pyplot(fig3)
         st.markdown('</div>', unsafe_allow_html=True)
 
-# Model limitations
 st.header("⚠️ Model Limitations")
 st.markdown("""
 While the Black-Scholes model provides a theoretical framework, real-world trading has challenges:
