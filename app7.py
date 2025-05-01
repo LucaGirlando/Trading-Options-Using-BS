@@ -18,27 +18,28 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    /* Light Theme */
-    --primary-dark: #1a365d;
-    --primary-medium: #2c5282;
-    --primary-light: #ebf8ff;
-    --accent-blue: #3182ce;
-    --accent-red: #e53e3e;
-    --accent-green: #38a169;
-    --bg-light: #f7fafc;
+    /* Light Theme - No Gray */
+    --primary-dark: #1a365d;          /* Deep navy blue */
+    --primary-medium: #2c5282;        /* Medium blue */
+    --primary-light: #ebf8ff;         /* Very light sky blue */
+    --accent-blue: #3182ce;           /* Vibrant blue */
+    --accent-red: #e53e3e;            /* Pure red */
+    --accent-green: #38a169;          /* Fresh green */
+    --bg-light: #f7fafc;              /* Off-white with blue tint */
+    --card-light: #ffffff;            /* Pure white */
+    --text-light: #1a365d;            /* Dark navy for text */
+    --border-light: #bee3f8;          /* Light blue border */
+    
+    /* Dark Theme */
     --bg-dark: #0d1117;
-    --card-light: #ffffff;
     --card-dark: #161b22;
-    --text-light: #2d3748;
     --text-dark: #e2e8f0;
-    --border-light: #e2e8f0;
     --border-dark: #30363d;
-    --success-light: #f0fff4;
-    --success-dark: #162b22;
-    --warning-light: #fffaf0;
-    --warning-dark: #2b2118;
-    --error-light: #fff5f5;
-    --error-dark: #2c1a1a;
+    
+    /* Functional colors */
+    --success-light: #f0fff4;         /* Very light green */
+    --warning-light: #fffaf0;         /* Very light orange */
+    --error-light: #fff5f5;           /* Very light red */
 }
 
 * {
@@ -48,6 +49,7 @@ st.markdown("""
 h1, h2, h3, h4 {
     font-weight: 600;
     letter-spacing: -0.025em;
+    color: var(--primary-dark);
 }
 
 .main {
@@ -87,13 +89,9 @@ h1, h2, h3, h4 {
 }
 
 .stButton>button:hover {
-    background-color: #2c5282;
+    background-color: var(--primary-medium);
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.stButton>button:active {
-    transform: translateY(0);
 }
 
 .plot-container {
@@ -112,30 +110,6 @@ h1, h2, h3, h4 {
     border-radius: 6px;
     margin-top: 20px;
     border-left: 4px solid var(--accent-red);
-    font-size: 0.9em;
-}
-
-/* Data table styling */
-.stDataFrame {
-    border-radius: 8px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-}
-
-/* Input controls */
-.stNumberInput, .stSlider, .stRadio {
-    margin-bottom: 12px;
-}
-
-/* Expander styling */
-.stExpander {
-    border: 1px solid var(--border-light) !important;
-    border-radius: 8px !important;
-    margin-bottom: 16px !important;
-}
-
-.stExpander .streamlit-expanderHeader {
-    font-weight: 500 !important;
-    color: var(--text-light) !important;
 }
 
 /* Dark Theme Overrides */
@@ -149,89 +123,14 @@ h1, h2, h3, h4 {
         --border-light: #30363d;
     }
     
-    h1, h2, h3, h4 {
-        color: var(--primary-dark) !important;
-    }
-    
-    .metric-container {
-        background-color: var(--card-dark) !important;
-        border-color: var(--border-dark) !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
-    }
-    
-    .plot-container {
-        background-color: var(--card-dark) !important;
-        border-color: var(--border-dark) !important;
-    }
-    
     .warning-box {
-        background-color: var(--error-dark) !important;
-        color: var(--text-dark) !important;
-        border-left-color: #f56565 !important;
-    }
-    
-    .stDataFrame {
-        background-color: var(--card-dark) !important;
-    }
-    
-    .stExpander {
-        border-color: var(--border-dark) !important;
-    }
-    
-    .stExpander .streamlit-expanderHeader {
-        color: var(--text-dark) !important;
-    }
-    
-    /* Matplotlib dark theme integration */
-    .stPlot {
-        background-color: var(--card-dark) !important;
+        background-color: #2c1a1a;
+        color: var(--text-dark);
+        border-left-color: #f56565;
     }
 }
 
-/* Typography improvements */
-body {
-    line-height: 1.6;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-light);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent-blue);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-medium);
-}
-
-/* Animation for metrics */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.metric-container {
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .metric-container {
-        padding: 12px;
-    }
-    
-    .plot-container {
-        padding: 16px;
-    }
-}
+/* Additional styling... */
 </style>
 """, unsafe_allow_html=True)
 
