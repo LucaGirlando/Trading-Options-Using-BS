@@ -42,12 +42,22 @@ section[data-testid="stSidebar"] h3 {
     color: #2c3e50;
 }
 
+/* Buttons */
 button[kind="primary"] {
-        background-color: #1E90FF !important;
-        color: white !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-    }
+    background-color: #6a0dad !important; /* Viola */
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button[kind="primary"]:hover {
+    background-color: #4b0082 !important; /* Viola scuro al passaggio del mouse */
+    color: white !important;
+}
+
 
 /* Input labels */
 label {
