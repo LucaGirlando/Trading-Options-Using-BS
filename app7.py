@@ -1,4 +1,4 @@
-# App Trading Options using BS model
+#App Trading Options using BS model
 import streamlit as st
 import numpy as np
 from scipy.stats import norm
@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import qfin as qf
 from matplotlib import rcParams
 
-# Set page config
+# Set page config with your details
 st.set_page_config(
     page_title="Trading Options Using the Black-Scholes Model",
     page_icon="📈",
@@ -16,56 +16,99 @@ st.set_page_config(
 
 # Custom CSS styling
 st.markdown("""
-    <style>
-    /* General styles */
-    body {
-        font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+/* General body style for dark/light adaptability */
+body {
+    background-color: transparent;
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+}
 
-    /* Metric container */
-    .metric-container {
-        background-color: var(--secondary-background-color);
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
+/* Title */
+h1 {
+    font-size: 2.2em;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    background: linear-gradient(90deg, #1abc9c, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-    /* Plot container */
-    .plot-container {
-        background-color: var(--secondary-background-color);
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
+/* Sidebar header */
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #2c3e50;
+}
 
-    /* Warning box */
-    .warning-box {
-        background-color: #ffe6e6;
-        border-left: 6px solid #ff0000;
-        padding: 1rem;
-        margin-top: 2rem;
-        font-weight: bold;
-        color: #ff0000;
-    }
+/* Input labels */
+label {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--text-color);
+}
 
-    /* Run simulation button */
-    .stButton>button {
-        background-color: #ff6600;
-        color: white;
-        font-weight: bold;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.25rem;
-        transition: background-color 0.3s ease;
-    }
+/* Metrics */
+.metric-container {
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(240, 240, 240, 0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 10px;
+    text-align: center;
+}
 
-    .stButton>button:hover {
-        background-color: #e65c00;
-        color: white;
-    }
+.metric-container .metric-label {
+    font-size: 1em;
+    color: var(--text-color);
+}
 
-    </style>
+.metric-container .metric-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* Formula section */
+div[data-testid="stExpander"] {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Plot container */
+.plot-container {
+    background-color: rgba(255,255,255,0.02);
+    padding: 1em;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    margin-bottom: 1em;
+}
+
+/* Light/dark theme responsive text */
+:root {
+    --text-color: #111111;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e0e0e0;
+    }
+}
+
+/* LinkedIn credit */
+p a {
+    color: #2980b9;
+    text-decoration: none;
+}
+p a:hover {
+    text-decoration: underline;
+}
+</style>
 """, unsafe_allow_html=True)
+
 
 # Set matplotlib style
 plt.style.use('seaborn-v0_8')
@@ -78,7 +121,7 @@ st.markdown("""
     </p>
 """, unsafe_allow_html=True)
 
-# Title and introduction
+# Title and introduction with your LinkedIn
 st.markdown('<h1 style="color: black;">📊 Trading Options Using the Black-Scholes Model</h1>', unsafe_allow_html=True)
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
@@ -91,7 +134,7 @@ So you'll see that with the default data, the strategy works when running a high
 with st.sidebar:
     st.header("⚙️ Option Parameters")
     option_type = st.radio("Option Type", ["Call", "Put"], index=0)
-    strategy_type = st.radio("Strategy Direction", ["Buy (Long)", "Sell (Short)"], index=0, help="Buy = Buy options, Sell = Sell options")
+    strategy_type = st.sidebar.radio("Strategy Direction",["Buy (Long)", "Sell (Short)"],index=0,help="Buy = Buy options, Sell = Sell options")
     S = st.number_input("Current Stock Price (S)", value=100.0, step=1.0)
     K = st.number_input("Strike Price (K)", value=100.0, step=1.0)
     sigma = st.slider("Volatility (σ)", 0.01, 1.0, 0.3, step=0.01, help="Annualized volatility of the underlying asset")
@@ -100,7 +143,7 @@ with st.sidebar:
     market_price = st.number_input("Market Maker Ask Price", value=14.10, step=0.1, help="Current market price for the option")
     n_simulations = st.slider("Number of Simulations", 100, 100000, 1000, step=100, help="More simulations increase result accuracy but take longer")
 
-# Black-Scholes formula
+# Black-Scholes formula for both call and put
 def black_scholes(S, K, sigma, r, t, option_type="call"):
     d1 = (np.log(S/K) + (r + ((sigma**2)/2))*t) / (sigma * np.sqrt(t))
     d2 = d1 - (sigma * np.sqrt(t))
@@ -117,7 +160,7 @@ def black_scholes(S, K, sigma, r, t, option_type="call"):
 # Calculate theoretical price
 theoretical_price = black_scholes(S, K, sigma, r, t, option_type.lower())
 
-# Display formulas
+# Display formulas in an expandable section
 with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     if option_type == "Call":
         st.markdown(r"""
@@ -161,7 +204,7 @@ with st.expander("📚 Black-Scholes Formula Details", expanded=True):
     - $N(\cdot)$ = Cumulative distribution function of the standard normal distribution
     """)
 
-# Display calculated values
+# Display calculated values in columns
 col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
@@ -210,74 +253,153 @@ with st.container():
             else:
                 ax.vlines(252, path.simulated_path[-1], K, color='#e74c3c', 
                         label=f"Loss (Pay ${-terminal_payoff:.2f})", linewidth=3)
-   
-    elif strategy_type == "Buy (Long)":
+    else:
         if option_type == "Call":
             terminal_payoff = max(path.simulated_path[-1] - K, 0)
-            if terminal_payoff > market_price:
-                ax.vlines(252, K, path.simulated_path[-1], color='#2ecc71',
-                          label=f"Profit: +${terminal_payoff - market_price:.2f}", linewidth=3)
+            if terminal_payoff == 0:
+                ax.vlines(252, path.simulated_path[-1], K, color='#e74c3c', 
+                        label=f"Loss (Lose ${market_price:.2f} premium)", linewidth=3)
             else:
-                ax.vlines(252, path.simulated_path[-1], K, color='#e74c3c',
-                          label=f"Loss: -${market_price - terminal_payoff:.2f}", linewidth=3)
+                ax.vlines(252, K, path.simulated_path[-1], color='#2ecc71', 
+                        label=f"Profit (Gain ${terminal_payoff:.2f})", linewidth=3)
         else:
             terminal_payoff = max(K - path.simulated_path[-1], 0)
-            if terminal_payoff > market_price:
-                ax.vlines(252, path.simulated_path[-1], K, color='#2ecc71',
-                          label=f"Profit: +${terminal_payoff - market_price:.2f}", linewidth=3)
+            if terminal_payoff == 0:
+                ax.vlines(252, K, path.simulated_path[-1], color='#e74c3c', 
+                        label=f"Loss (Lose ${market_price:.2f} premium)", linewidth=3)
             else:
-                ax.vlines(252, K, path.simulated_path[-1], color='#e74c3c',
-                          label=f"Loss: -${market_price - terminal_payoff:.2f}", linewidth=3)
+                ax.vlines(252, path.simulated_path[-1], K, color='#2ecc71', 
+                        label=f"Profit (Gain ${terminal_payoff:.2f})", linewidth=3)
 
-    ax.legend()
-    ax.set_xlabel("Time Step (days)")
-    ax.set_ylabel("Stock Price")
+    ax.set_xlabel('Time (trading days)', fontsize=12)
+    ax.set_ylabel('Stock Price', fontsize=12)
+    ax.legend(fontsize=10)
+    ax.grid(True, linestyle='--', alpha=0.7)
     st.pyplot(fig)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Run Monte Carlo
-st.header("🎲 Monte Carlo Simulation")
+# Calculate P/L for single simulation
+if strategy_type == "Sell (Short)":
+    pl_single = market_price + terminal_payoff
+else:
+    pl_single = terminal_payoff - market_price
 
-if st.button("Run Monte Carlo Simulation"):
-    terminal_prices = []
-    pnl = []
+st.markdown('<div class="metric-container">', unsafe_allow_html=True)
+st.metric("Single Simulation P/L", f"{pl_single:.2f}", 
+          help=f"Profit/Loss from {strategy_type.lower()} one {option_type.lower()} option at market price")
+st.markdown('</div>', unsafe_allow_html=True)
 
-    for _ in range(n_simulations):
-        p = qf.simulations.GeometricBrownianMotion(S, r, sigma, 1/252, t).simulated_path[-1]
-        terminal_prices.append(p)
+# Monte Carlo simulation
+st.header("🎲 Monte Carlo Simulation Results")
+st.markdown(f"""
+Running {n_simulations:,} simulations to estimate the expected P/L from this {option_type.lower()} option strategy.
+The underlying stock price follows Geometric Brownian Motion:
+""")
+st.markdown(r"""
+$$
+dS_t = \mu S_t dt + \sigma S_t dW_t
+$$
 
+where:
+- $\mu$ = Drift rate (risk-free rate in risk-neutral measure)
+- $\sigma$ = Volatility
+- $W_t$ = Wiener process (Brownian motion)
+""")
+
+if st.button("🚀 Run Monte Carlo Simulation", key="monte_carlo"):
+    st.write("Running simulations...")
+    
+    premium = market_price
+    pls = []
+    
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    
+    for i in range(n_simulations):
+        path = qf.simulations.GeometricBrownianMotion(S, r, sigma, 1/252, t)
+        
         if option_type == "Call":
-            payoff = max(p - K, 0)
+            terminal_value = max(path.simulated_path[-1] - K, 0)
         else:
-            payoff = max(K - p, 0)
-
-        if strategy_type == "Sell (Short)":
-            pnl.append(market_price - payoff)
-        else:
-            pnl.append(payoff - market_price)
-
-    pnl = np.array(pnl)
-
-    st.markdown('<div class="plot-container">', unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(10, 6))
-    ax2.hist(pnl, bins=50, color='#1abc9c', edgecolor='black')
-    ax2.set_title(f"Distribution of Profit & Loss from {n_simulations} Simulations", fontsize=14)
-    ax2.set_xlabel("Profit / Loss")
-    ax2.set_ylabel("Frequency")
-    ax2.axvline(x=np.mean(pnl), color='red', linestyle='--', linewidth=2, label=f"Mean P&L: ${np.mean(pnl):.2f}")
-    ax2.legend()
-    st.pyplot(fig2)
+            terminal_value = max(K - path.simulated_path[-1], 0)
+            
+        pls.append(terminal_value - premium)
+        
+        if i % (n_simulations//100) == 0:
+            progress_bar.progress(i/n_simulations)
+            status_text.text(f"Progress: {i/n_simulations*100:.1f}% complete")
+    
+    expected_pl = np.mean(pls)
+    
+    st.markdown('<div class="metric-container">', unsafe_allow_html=True)
+    st.metric(f"Expected P/L per {option_type} Option", f"{expected_pl:.2f}",
+             help=f"Average profit/loss per {option_type.lower()} option over all simulations")
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Equity curve
+    with st.container():
+        st.markdown('<div class="plot-container">', unsafe_allow_html=True)
+        fig2, ax2 = plt.subplots(figsize=(10, 6))
+        ax2.set_title(f"{option_type} Strategy Equity Curve", fontsize=14, pad=20)
+        ax2.plot(np.cumsum(pls), label="Account Equity", color='#3498db', linewidth=2)
+        ax2.set_xlabel('Option Trade', fontsize=12)
+        ax2.set_ylabel('Portfolio Value', fontsize=12)
+        ax2.legend(fontsize=10)
+        ax2.grid(True, linestyle='--', alpha=0.7)
+        st.pyplot(fig2)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    with st.expander("ℹ️ Why does the number of simulations matter?", expanded=True):
+        st.markdown("""
+        The number of simulations significantly impacts the reliability of our results because:
+        
+        1. **Law of Large Numbers**: As we increase simulations (1000 → 10000 → 100000), 
+           our estimate converges to the true expected value.
+        
+        2. **Variance Reduction**: More simulations reduce the standard error, making the 
+           expected P/L more stable and reliable.
+        
+        3. **Extreme Events**: Rare but impactful events are better captured with higher 
+           simulation counts, giving a more complete picture of potential outcomes.
+        
+        4. **Confidence Intervals**: With more data, we can be more confident that our 
+           estimated edge is statistically significant.
+        
+        In practice, 10,000+ simulations are typically needed for stable results in 
+        options pricing applications.
+        """)
+    
+    # Histogram of results
+    with st.container():
+        st.markdown('<div class="plot-container">', unsafe_allow_html=True)
+        fig3, ax3 = plt.subplots(figsize=(10, 6))
+        ax3.set_title(f"Distribution of {option_type} P/L Outcomes", fontsize=14, pad=20)
+        ax3.hist(pls, bins=50, color='#3498db', edgecolor='#2980b9')
+        ax3.axvline(expected_pl, color='#e74c3c', linestyle='--', 
+                   linewidth=2, label=f'Mean P/L: {expected_pl:.2f}')
+        ax3.set_xlabel('P/L per Option', fontsize=12)
+        ax3.set_ylabel('Frequency', fontsize=12)
+        ax3.legend(fontsize=10)
+        ax3.grid(True, linestyle='--', alpha=0.7)
+        st.pyplot(fig3)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    st.success(f"Average P&L over {n_simulations} simulations: ${np.mean(pnl):.2f}")
-    st.info(f"Standard Deviation of P&L: ${np.std(pnl):.2f}")
-    st.info(f"Probability of Profit: {(pnl > 0).mean()*100:.2f}%")
+# Model limitations
+st.header("⚠️ Model Limitations")
+st.markdown("""
+While the Black-Scholes model provides a theoretical framework, real-world trading has challenges:
+- **Non-constant volatility**: Volatility clusters and changes over time
+- **Market jumps**: Real markets experience sudden jumps not captured by GBM
+- **Liquidity constraints**: Market maker quotes may not always be available
+- **Transaction costs**: Not accounted for in this simulation
+- **Discrete hedging**: Continuous hedging is impossible in practice
+- **Dividends**: The basic model doesn't account for dividend payments
+- **Interest rate changes**: Assumes constant risk-free rate
+- **Early exercise**: For American options, early exercise isn't considered
+""")
 
-# Disclaimer
 st.markdown("""
 <div class="warning-box">
-    ⚠️ Note: This is for educational purposes only. Options trading involves substantial risk.
+    <strong>Note:</strong> This is for educational purposes only. Options trading involves substantial risk.
 </div>
 """, unsafe_allow_html=True)
-
- 
