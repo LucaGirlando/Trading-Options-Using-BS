@@ -18,26 +18,36 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    --primary-dark: #2c3e50;
-    --primary-medium: #3498db;
-    --accent-blue: #3498db;
-    --accent-red: #e74c3c;
-    --accent-green: #2ecc71;
-    --bg-light: #000000;
-    --bg-dark: #0e1117;
-    --card-light: white;
-    --card-dark: #1a2639;
-    --border-light: #000000;
-    --border-dark: #3e4a61;
+    /* Light Theme */
+    --primary-dark: #1a365d;
+    --primary-medium: #2c5282;
+    --primary-light: #ebf8ff;
+    --accent-blue: #3182ce;
+    --accent-red: #e53e3e;
+    --accent-green: #38a169;
+    --bg-light: #f7fafc;
+    --bg-dark: #0d1117;
+    --card-light: #ffffff;
+    --card-dark: #161b22;
+    --text-light: #2d3748;
+    --text-dark: #e2e8f0;
+    --border-light: #e2e8f0;
+    --border-dark: #30363d;
+    --success-light: #f0fff4;
+    --success-dark: #162b22;
+    --warning-light: #fffaf0;
+    --warning-dark: #2b2118;
+    --error-light: #fff5f5;
+    --error-dark: #2c1a1a;
 }
 
 * {
-    font-family: 'Lato', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 h1, h2, h3, h4 {
-    color: var(--primary-dark);
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
 .main {
@@ -45,56 +55,98 @@ h1, h2, h3, h4 {
 }
 
 .sidebar .sidebar-content {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium)) !important;
+    background: linear-gradient(180deg, var(--primary-dark), var(--primary-medium)) !important;
     color: white !important;
+    border-right: 1px solid rgba(255,255,255,0.1) !important;
 }
 
 .metric-container {
     background-color: var(--card-light);
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 16px;
     border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+}
+
+.metric-container:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
 .stButton>button {
     background-color: var(--accent-blue);
     color: white;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 10px 24px;
-    font-weight: bold;
+    font-weight: 500;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .stButton>button:hover {
-    background-color: #2980b9;
+    background-color: #2c5282;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.stButton>button:active {
+    transform: translateY(0);
 }
 
 .plot-container {
     background-color: var(--card-light);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
     border: 1px solid var(--border-light);
 }
 
 .warning-box {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border-radius: 5px;
+    background-color: var(--error-light);
+    color: var(--text-light);
+    padding: 16px;
+    border-radius: 6px;
     margin-top: 20px;
+    border-left: 4px solid var(--accent-red);
+    font-size: 0.9em;
 }
 
+/* Data table styling */
+.stDataFrame {
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+/* Input controls */
+.stNumberInput, .stSlider, .stRadio {
+    margin-bottom: 12px;
+}
+
+/* Expander styling */
+.stExpander {
+    border: 1px solid var(--border-light) !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+}
+
+.stExpander .streamlit-expanderHeader {
+    font-weight: 500 !important;
+    color: var(--text-light) !important;
+}
+
+/* Dark Theme Overrides */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-dark: #f0f2f6;
-        --primary-medium: #3498db;
-        --bg-light: #0e1117;
-        --card-light: #1a2639;
-        --text-light: #f0f2f6;
-        --border-light: #3e4a61;
+        --primary-dark: #ebf8ff;
+        --primary-medium: #90cdf4;
+        --bg-light: #0d1117;
+        --card-light: #161b22;
+        --text-light: #e2e8f0;
+        --border-light: #30363d;
     }
     
     h1, h2, h3, h4 {
@@ -104,6 +156,7 @@ h1, h2, h3, h4 {
     .metric-container {
         background-color: var(--card-dark) !important;
         border-color: var(--border-dark) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
     }
     
     .plot-container {
@@ -112,12 +165,71 @@ h1, h2, h3, h4 {
     }
     
     .warning-box {
-        background-color: #33262a;
-        color: #f8d7da;
+        background-color: var(--error-dark) !important;
+        color: var(--text-dark) !important;
+        border-left-color: #f56565 !important;
     }
     
     .stDataFrame {
         background-color: var(--card-dark) !important;
+    }
+    
+    .stExpander {
+        border-color: var(--border-dark) !important;
+    }
+    
+    .stExpander .streamlit-expanderHeader {
+        color: var(--text-dark) !important;
+    }
+    
+    /* Matplotlib dark theme integration */
+    .stPlot {
+        background-color: var(--card-dark) !important;
+    }
+}
+
+/* Typography improvements */
+body {
+    line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-medium);
+}
+
+/* Animation for metrics */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.metric-container {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .metric-container {
+        padding: 12px;
+    }
+    
+    .plot-container {
+        padding: 16px;
     }
 }
 </style>
