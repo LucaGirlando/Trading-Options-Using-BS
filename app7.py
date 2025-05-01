@@ -29,7 +29,7 @@ st.markdown("""
     --card-light: white;
     --card-dark: #1a2639;
     --text-light: #000000;
-    --text-dark: #f0f2f6;
+    --text-dark: #000000;
     --border-light: rgba(0,0,0,0.1);
     --border-dark: #3e4a61;
 }
