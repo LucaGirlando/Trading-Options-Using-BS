@@ -135,7 +135,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title and introduction with your LinkedIn
-st.title("📊 Trading Options Using the Black-Scholes Model")
+st.markdown('<h1 style="color: black;">📊 Trading Options Using the Black-Scholes Model</h1>', unsafe_allow_html=True)
 st.markdown("""
 This interactive tool demonstrates how to identify trading opportunities by comparing 
 Black-Scholes theoretical prices with market maker quotes for **call/put options**. The strategy involves selling 
