@@ -17,30 +17,7 @@ st.set_page_config(
 # Custom CSS styling
 st.markdown("""
 <style>
-:root {
-    /* Light Theme - No Gray, Black Text */
-    --primary-dark: #000000;          /* Pure black for text */
-    --primary-medium: ##000000;        /* Medium blue */
-    --primary-light: #000000;         /* Very light sky blue */
-    --accent-blue: #000000;           /* Vibrant blue */
-    --accent-red: #000000;            /* Pure red */
-    --accent-green: #38a169;          /* Fresh green */
-    --bg-light: #000000;              /* Pure white background */
-    --card-light: #000000;            /* Pure white cards */
-    --text-light: #000000;            /* Black for all text */
-    --border-light: #000000;          /* Light blue-gray border */
-    
-    /* Dark Theme */
-    --bg-dark: #0d1117;
-    --card-dark: #161b22;
-    --text-dark: #ffffff;             /* White text in dark mode */
-    --border-dark: #30363d;
-    
-    /* Functional colors */
-    --success-light: #f0fff4;
-    --warning-light: #fffaf0;
-    --error-light: #fff5f5;
-}
+:root 
 
 * {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
