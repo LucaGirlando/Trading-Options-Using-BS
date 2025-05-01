@@ -42,6 +42,13 @@ section[data-testid="stSidebar"] h3 {
     color: #2c3e50;
 }
 
+button[kind="primary"] {
+        background-color: #1E90FF !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+    }
+
 /* Input labels */
 label {
     font-weight: 600;
