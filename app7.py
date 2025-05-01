@@ -20,15 +20,15 @@ st.markdown("""
 :root {
     /* Light Theme - No Gray, Black Text */
     --primary-dark: #000000;          /* Pure black for text */
-    --primary-medium: #2c5282;        /* Medium blue */
-    --primary-light: #2c5282;         /* Very light sky blue */
-    --accent-blue: #3182ce;           /* Vibrant blue */
-    --accent-red: #e53e3e;            /* Pure red */
+    --primary-medium: ##000000;        /* Medium blue */
+    --primary-light: #000000;         /* Very light sky blue */
+    --accent-blue: #000000;           /* Vibrant blue */
+    --accent-red: #000000;            /* Pure red */
     --accent-green: #38a169;          /* Fresh green */
-    --bg-light: #ffffff;              /* Pure white background */
-    --card-light: #ffffff;            /* Pure white cards */
+    --bg-light: #000000;              /* Pure white background */
+    --card-light: #000000;            /* Pure white cards */
     --text-light: #000000;            /* Black for all text */
-    --border-light: #cbd5e0;          /* Light blue-gray border */
+    --border-light: #000000;          /* Light blue-gray border */
     
     /* Dark Theme */
     --bg-dark: #0d1117;
