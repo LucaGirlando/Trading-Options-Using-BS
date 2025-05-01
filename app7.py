@@ -18,38 +18,46 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    /* Light Theme - No Gray */
-    --primary-dark: #1a365d;          /* Deep navy blue */
+    /* Light Theme - No Gray, Black Text */
+    --primary-dark: #000000;          /* Pure black for text */
     --primary-medium: #2c5282;        /* Medium blue */
     --primary-light: #ebf8ff;         /* Very light sky blue */
     --accent-blue: #3182ce;           /* Vibrant blue */
     --accent-red: #e53e3e;            /* Pure red */
     --accent-green: #38a169;          /* Fresh green */
-    --bg-light: #f7fafc;              /* Off-white with blue tint */
-    --card-light: #ffffff;            /* Pure white */
-    --text-light: #1a365d;            /* Dark navy for text */
-    --border-light: #bee3f8;          /* Light blue border */
+    --bg-light: #ffffff;              /* Pure white background */
+    --card-light: #ffffff;            /* Pure white cards */
+    --text-light: #000000;            /* Black for all text */
+    --border-light: #cbd5e0;          /* Light blue-gray border */
     
     /* Dark Theme */
     --bg-dark: #0d1117;
     --card-dark: #161b22;
-    --text-dark: #e2e8f0;
+    --text-dark: #ffffff;             /* White text in dark mode */
     --border-dark: #30363d;
     
     /* Functional colors */
-    --success-light: #f0fff4;         /* Very light green */
-    --warning-light: #fffaf0;         /* Very light orange */
-    --error-light: #fff5f5;           /* Very light red */
+    --success-light: #f0fff4;
+    --warning-light: #fffaf0;
+    --error-light: #fff5f5;
 }
 
 * {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Force black text for all elements */
+h1, h2, h3, h4, h5, h6,
+.stMarkdown, .stText, .stAlert, .stExpander,
+.stNumberInput label, .stSlider label, .stRadio label,
+.stSelectbox label, .stTextInput label {
+    color: var(--text-light) !important;
+}
+
 h1, h2, h3, h4 {
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    color: var(--primary-dark);
+    font-weight: 700;                 /* Bolder for better visibility */
+    letter-spacing: -0.015em;
+    margin-bottom: 0.75rem !important;
 }
 
 .main {
@@ -57,9 +65,14 @@ h1, h2, h3, h4 {
 }
 
 .sidebar .sidebar-content {
-    background: linear-gradient(180deg, var(--primary-dark), var(--primary-medium)) !important;
+    background: linear-gradient(180deg, #1a365d, #2c5282) !important;
     color: white !important;
     border-right: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Ensure all text in metrics is black */
+.metric-container, .metric-container * {
+    color: var(--text-light) !important;
 }
 
 .metric-container {
@@ -74,24 +87,20 @@ h1, h2, h3, h4 {
 
 .metric-container:hover {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
 }
 
 .stButton>button {
     background-color: var(--accent-blue);
-    color: white;
+    color: white !important;
     border-radius: 6px;
     padding: 10px 24px;
-    font-weight: 500;
+    font-weight: 600;
     border: none;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .stButton>button:hover {
-    background-color: var(--primary-medium);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #2b6cb0;
 }
 
 .plot-container {
@@ -105,32 +114,56 @@ h1, h2, h3, h4 {
 
 .warning-box {
     background-color: var(--error-light);
-    color: var(--text-light);
+    color: var(--text-light) !important;
     padding: 16px;
     border-radius: 6px;
     margin-top: 20px;
     border-left: 4px solid var(--accent-red);
 }
 
-/* Dark Theme Overrides */
+/* Dark Theme Overrides - White text */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-dark: #ebf8ff;
-        --primary-medium: #90cdf4;
+        --text-light: #ffffff !important;  /* Force white text in dark mode */
         --bg-light: #0d1117;
         --card-light: #161b22;
-        --text-light: #e2e8f0;
         --border-light: #30363d;
     }
     
     .warning-box {
         background-color: #2c1a1a;
-        color: var(--text-dark);
         border-left-color: #f56565;
+    }
+    
+    /* Ensure all text stays visible in dark mode */
+    h1, h2, h3, h4, h5, h6,
+    .stMarkdown, .stText, .stAlert, .stExpander,
+    .stNumberInput label, .stSlider label, .stRadio label,
+    .stSelectbox label, .stTextInput label {
+        color: var(--text-dark) !important;
     }
 }
 
-/* Additional styling... */
+/* Additional visibility enhancements */
+.stMarkdown p, .stMarkdown li {
+    color: var(--text-light) !important;
+    font-weight: 400;
+}
+
+.stAlert {
+    background-color: var(--card-light) !important;
+}
+
+/* Force black text in tables */
+.stDataFrame {
+    color: var(--text-light) !important;
+}
+
+/* Input controls text visibility */
+.stTextInput input, .stNumberInput input, 
+.stTextArea textarea, .stSelectbox select {
+    color: var(--text-light) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
