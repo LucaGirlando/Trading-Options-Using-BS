@@ -20,15 +20,14 @@ st.markdown("""
 :root {
     --primary-dark: #2c3e50;
     --primary-medium: #3498db;
-    --primary-light: #000000;
     --accent-blue: #3498db;
     --accent-red: #e74c3c;
     --accent-green: #2ecc71;
-    --bg-light: #f8f9fa;
+    --bg-light: #000000;
     --bg-dark: #0e1117;
     --card-light: white;
     --card-dark: #1a2639;
-    --border-light: rgba(0,0,0,0.1);
+    --border-light: #000000;
     --border-dark: #3e4a61;
 }
 
