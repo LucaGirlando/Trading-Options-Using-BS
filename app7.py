@@ -21,7 +21,7 @@ st.markdown("""
     /* Light Theme - No Gray, Black Text */
     --primary-dark: #000000;          /* Pure black for text */
     --primary-medium: #2c5282;        /* Medium blue */
-    --primary-light: #ebf8ff;         /* Very light sky blue */
+    --primary-light: #000000;         /* Very light sky blue */
     --accent-blue: #3182ce;           /* Vibrant blue */
     --accent-red: #e53e3e;            /* Pure red */
     --accent-green: #38a169;          /* Fresh green */
