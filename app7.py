@@ -20,7 +20,7 @@ st.markdown("""
 :root {
     --primary-dark: #2c3e50;
     --primary-medium: #3498db;
-    --primary-light: #f8f9fa;
+    --primary-light: #000000;
     --accent-blue: #3498db;
     --accent-red: #e74c3c;
     --accent-green: #2ecc71;
@@ -28,8 +28,6 @@ st.markdown("""
     --bg-dark: #0e1117;
     --card-light: white;
     --card-dark: #1a2639;
-    --text-light: #000000;
-    --text-dark: #000000;
     --border-light: rgba(0,0,0,0.1);
     --border-dark: #3e4a61;
 }
