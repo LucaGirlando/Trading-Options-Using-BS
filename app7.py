@@ -14,117 +14,84 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS styling
-st.markdown("""
+#CSS
 <style>
-/* General body style for dark/light adaptability */
-body {
+
+/* Global style adapting to dark/light themes */
+body, .stApp {
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     background-color: transparent;
-    font-family: 'Segoe UI', sans-serif;
-    line-height: 1.6;
+    color: inherit;
 }
 
-/* Title */
+/* Title styling */
 h1 {
+    text-align: center;
+    font-weight: 800;
     font-size: 2.2em;
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-    background: linear-gradient(90deg, #1abc9c, #3498db);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Sidebar header */
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3 {
-    color: #2c3e50;
-}
-
-/* Buttons */
-button[kind="primary"] {
-    background-color: #6a0dad !important; /* Viola */
-    color: white !important;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s ease;
-}
-
-button[kind="primary"]:hover {
-    background-color: #4b0082 !important; /* Viola scuro al passaggio del mouse */
-    color: white !important;
-}
-
-
-/* Input labels */
-label {
-    font-weight: 600;
-    font-size: 0.95em;
+    margin-bottom: 1rem;
     color: var(--text-color);
 }
 
-/* Metrics */
+/* Metric styling */
 .metric-container {
-    border: 1px solid rgba(128, 128, 128, 0.2);
-    border-radius: 10px;
-    padding: 10px;
-    background-color: rgba(240, 240, 240, 0.05);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.metric-container .metric-label {
-    font-size: 1em;
-    color: var(--text-color);
-}
-
-.metric-container .metric-value {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #27ae60;
-}
-
-/* Formula section */
-div[data-testid="stExpander"] {
-    background-color: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(128, 128, 128, 0.15);
+    background-color: rgba(0, 123, 255, 0.05);
     border-radius: 12px;
     padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Highlight simulation button text */
+button[kind="primary"], div.stButton > button {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease-in-out;
+}
+button[kind="primary"]:hover, div.stButton > button:hover {
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.7);
+}
+
+/* Note warning */
+div[data-testid="stMarkdownContainer"] p strong.red-note {
+    color: red;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 1em;
 }
 
 /* Plot container */
 .plot-container {
-    background-color: rgba(255,255,255,0.02);
-    padding: 1em;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-    margin-bottom: 1em;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 1rem;
 }
 
-/* Light/dark theme responsive text */
-:root {
-    --text-color: #111111;
-}
+/* For dark theme compatibility */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --text-color: #e0e0e0;
+    .metric-container {
+        background-color: rgba(0, 123, 255, 0.15);
+    }
+
+    .plot-container {
+        background-color: rgba(255, 255, 255, 0.05);
     }
 }
 
-/* LinkedIn credit */
-p a {
-    color: #2980b9;
-    text-decoration: none;
-}
-p a:hover {
-    text-decoration: underline;
-}
 </style>
-""", unsafe_allow_html=True)
+
 
 
 # Set matplotlib style
